@@ -2,7 +2,7 @@ import React from 'react';
 import { Tabs, Button, Spin } from 'antd';
 import {API_ROOT, AUTH_PREFIX, GEO_OPTIONS, TOKEN_KEY} from "../constants";
 import $ from 'jquery';
-
+import { Gallery} from "./Gallery";
 
 const TabPane = Tabs.TabPane;
 
@@ -12,6 +12,7 @@ export class Home extends React.Component {
         loadingPosts: false,
         loadingGeoLocation: false,
         error: '',
+        posts: [],
     }
     getGeoLocation = () => {
         if ("geolocation" in navigator) {
@@ -53,7 +54,19 @@ export class Home extends React.Component {
         } else if (this.state.loadingGeoLocation) {
             return <Spin tip="Loading Geo Location..."/>;
         } else if(this.state.loadingPosts) {
-            return <Spin tip="Loading Post Location..."/>;
+            return <Spin tip="Loading Nearby Posts..."/>;
+        } else if(this.state.posts && this.state.posts.length > 0) {
+            const images = this.state.posts.map((post) => {
+                return {
+                    user: post.user,
+                    src: post.url,
+                    thumbnail: post.url,
+                    thumbnailWidth: 400,
+                    thumbnailHeight: 300,
+                    caption: post.message,
+                }
+            });
+            return <Gallery images={images}/>;
         } else {
             return <div>content</div>;
         }
@@ -72,7 +85,7 @@ export class Home extends React.Component {
             },
         }).then((response)=> {
             console.log(response);
-            this.setState({loadingPosts: false, error: ''});
+            this.setState({posts: response, loadingPosts: false, error: ''});
         }, (response) => {
             console.log(response.responseText);
             this.setState({loadingPosts: false, response: response.responseText});
