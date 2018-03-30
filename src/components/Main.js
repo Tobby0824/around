@@ -6,7 +6,7 @@ import { Switch, Route, Redirect } from 'react-router';
 
 export class Main extends React.Component {
     getLogin = () => {
-        return this.props.isLoggedIn? <Redirect to="/home" /> : <Login handleLogin={this.props.handleLogin}/>;
+        return this.props.isLoggedIn ? <Redirect to="/home" /> : <Login handleLogin={this.props.handleLogin}/>;
     }
 
     getRoot = () => {
@@ -16,6 +16,8 @@ export class Main extends React.Component {
     getHome = () => {
         return this.props.isLoggedIn ? <Home/> : <Redirect to="/login"/>;
     }
+
+
 
     render() {
         return(

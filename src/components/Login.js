@@ -20,7 +20,6 @@ class NormalLoginForm extends React.Component {
                         password: values.password,
                     })
                 }).then((response) => {
-
                     this.props.handleLogin(response);
                 }, (error) => {
                     message.error(error.responseText);
