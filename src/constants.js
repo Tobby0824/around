@@ -5,4 +5,5 @@ export const GEO_OPTIONS = {
     enableHighAccuracy: true,
     maximumAge: 360000,
     timeout: 27000
-}
+};
+export const AUTH_PREFIX = 'Bearer';
