@@ -3,6 +3,7 @@ import { Tabs, Button, Spin } from 'antd';
 import {API_ROOT, AUTH_PREFIX, GEO_OPTIONS, TOKEN_KEY} from "../constants";
 import $ from 'jquery';
 import { Gallery} from "./Gallery";
+import {CreatePostButton} from "./CreatePostButton"
 
 const TabPane = Tabs.TabPane;
 
@@ -60,22 +61,22 @@ export class Home extends React.Component {
                 return {
                     user: post.user,
                     src: post.url,
+                    caption: post.message,
                     thumbnail: post.url,
                     thumbnailWidth: 400,
                     thumbnailHeight: 300,
-                    caption: post.message,
                 }
             });
             return <Gallery images={images}/>;
         } else {
-            return <div>content</div>;
+            return null;
         }
 
     }
 
     loadNearbyPosts = (position) => {
-        const lat = 37.7915953;
-        const lon = -122.3937977;
+        const lat = 37.535623;
+        const lon = -122.26956;
         this.setState({loadingPosts: true});
         $.ajax({
             url: `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=20`,
@@ -95,7 +96,7 @@ export class Home extends React.Component {
     }
 
     render() {
-        const operations = <Button type="primary" >Create New Post</Button>;
+        const operations =<CreatePostButton/>;
         return(
             <Tabs tabBarExtraContent={operations} className="main-tabs">
                 <TabPane tab="Posts" key="1">
