@@ -1,18 +1,16 @@
+
 import React from 'react';
-import { Form, Input, Button, message} from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import $ from 'jquery';
-import { API_ROOT } from '../constants.js';
+import { API_ROOT } from '../constants.js'
 import { Link } from 'react-router-dom';
 
 const FormItem = Form.Item;
 
-
-
 class RegistrationForm extends React.Component {
     state = {
-        confirmDirty: false,
-        autoCompleteResult: [],
-    };
+        confirmDirty: false
+    }
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
@@ -28,10 +26,10 @@ class RegistrationForm extends React.Component {
                 }).then((response) => {
                     message.success(response);
                     this.props.history.push('/login');
-                }, (response) => {
-                    message.error(response.responseText);
+                },(error) => {
+                    message.error(error.responseText);
                 }).catch((error) => {
-                    console.log(error);
+                    message.error(error);
                 });
             }
         });
@@ -40,7 +38,7 @@ class RegistrationForm extends React.Component {
         const value = e.target.value;
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
     }
-    compareToFirstPassword = (rule, value, callback) => {
+    checkPassword = (rule, value, callback) => {
         const form = this.props.form;
         if (value && value !== form.getFieldValue('password')) {
             callback('Two passwords that you enter is inconsistent!');
@@ -48,7 +46,7 @@ class RegistrationForm extends React.Component {
             callback();
         }
     }
-    validateToNextPassword = (rule, value, callback) => {
+    checkConfirm = (rule, value, callback) => {
         const form = this.props.form;
         if (value && this.state.confirmDirty) {
             form.validateFields(['confirm'], { force: true });
@@ -59,15 +57,14 @@ class RegistrationForm extends React.Component {
     render() {
         const { getFieldDecorator } = this.props.form;
 
-
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 8 },
+                sm: { span: 6 },
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 14 },
             },
         };
         const tailFormItemLayout = {
@@ -77,8 +74,8 @@ class RegistrationForm extends React.Component {
                     offset: 0,
                 },
                 sm: {
-                    span: 16,
-                    offset: 8,
+                    span: 14,
+                    offset: 6,
                 },
             },
         };
@@ -88,52 +85,53 @@ class RegistrationForm extends React.Component {
                 <FormItem
                     {...formItemLayout}
                     label="Username"
+                    hasFeedback
                 >
                     {getFieldDecorator('username', {
-                        rules: [{ required: true, message: 'Please input your username!', whitespace: true}],
+                        rules: [{ required: true, message: 'Please input your username!', whitespace: true }],
                     })(
                         <Input />
                     )}
                 </FormItem>
-
                 <FormItem
                     {...formItemLayout}
                     label="Password"
+                    hasFeedback
                 >
                     {getFieldDecorator('password', {
                         rules: [{
                             required: true, message: 'Please input your password!',
                         }, {
-                            validator: this.validateToNextPassword,
+                            validator: this.checkConfirm,
                         }],
                     })(
                         <Input type="password" />
                     )}
                 </FormItem>
-
                 <FormItem
                     {...formItemLayout}
                     label="Confirm Password"
+                    hasFeedback
                 >
                     {getFieldDecorator('confirm', {
                         rules: [{
                             required: true, message: 'Please confirm your password!',
                         }, {
-                            validator: this.compareToFirstPassword,
+                            validator: this.checkPassword,
                         }],
                     })(
                         <Input type="password" onBlur={this.handleConfirmBlur} />
                     )}
                 </FormItem>
-
                 <FormItem {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">Register</Button>
-                    <p>I already have an account, go back to <Link to="/login">login</Link></p>
+                    <p>I already have account, go back to <Link to="/login">login</Link></p>
                 </FormItem>
-
             </Form>
         );
     }
 }
 
 export const Register = Form.create()(RegistrationForm);
+
+

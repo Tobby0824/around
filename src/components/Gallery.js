@@ -1,3 +1,4 @@
+
 import React, { Component }from 'react';
 import PropTypes from 'prop-types';
 import GridGallery from 'react-grid-gallery';
@@ -9,6 +10,7 @@ export class Gallery extends Component {
                 user: PropTypes.string.isRequired,
                 src: PropTypes.string.isRequired,
                 thumbnail: PropTypes.string.isRequired,
+                srcset: PropTypes.array,
                 caption: PropTypes.string,
                 thumbnailWidth: PropTypes.number.isRequired,
                 thumbnailHeight: PropTypes.number.isRequired
@@ -59,3 +61,5 @@ const captionStyle = {
     padding: "2px",
     fontSize: "90%"
 };
+
+
