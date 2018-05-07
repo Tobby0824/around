@@ -13,11 +13,17 @@ class App extends Component {
     handleLogin = (token) => {
         localStorage.setItem(TOKEN_KEY, token);
         this.setState({isLoggedIn: true});
+        //设置有效时间
+        //setTimeout(this.handleLogout, 360000);
     }
 
     handleLogout = () => {
         this.setState({isLoggedIn: false});
         localStorage.removeItem(TOKEN_KEY);
+    }
+
+    componentDidMount() {
+        window.onbeforeunload = this.handleLogout.bind(this);
     }
 
   render() {

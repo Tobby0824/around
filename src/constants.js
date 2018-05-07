@@ -1,5 +1,6 @@
 //export const API_ROOT = 'http://second-kiln-194922.appspot.com';
-export const API_ROOT = 'https://around-75015.appspot.com';
+//export const API_ROOT = 'https://around-75015.appspot.com';
+export const API_ROOT = 'https://around-75015.appspot.com/api/v1';
 export const API_ROOT_TEST = 'http://jsonplaceholder.typicode.com';
 export const TOKEN_KEY = 'TOKEN';
 export const POS_KEY = 'POS';
